@@ -1,0 +1,4 @@
+import Link from 'next/link';import {ArrowUpRight} from 'lucide-react';
+export function Logo(){return <Link href="/" className="brand"><span className="brand-mark">s</span>linkspace<span style={{color:'var(--accent)'}}>.</span></Link>}
+export function SiteNav(){return <header className="wide topnav"><Logo/><nav className="navlinks" aria-label="Primary"><a href="/#features">Features</a><a href="/#themes">Aesthetics</a><a href="/#how">How it works</a><Link href="/login">Sign in</Link><Link className="btn btn-small" href="/signup">Get started <ArrowUpRight size={14}/></Link></nav></header>}
+export function Footer(){return <footer className="wide footer"><Logo/><span>© {new Date().getFullYear()} LinkSpace. Designed for the creators of tomorrow.</span><div><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link></div></footer>}

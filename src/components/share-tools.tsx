@@ -1,0 +1,5 @@
+'use client';
+import {useState} from 'react';
+import {Check,Copy,Download,QrCode} from 'lucide-react';
+export function CopyButton({value}:{value:string}){const [copied,setCopied]=useState(false);async function copy(){try{await navigator.clipboard.writeText(value);setCopied(true);}catch{setCopied(false);}}return <button type="button" className="btn btn-small btn-light" onClick={copy}>{copied?<Check size={15}/>:<Copy size={15}/>} {copied?'Copied':'Copy link'}</button>}
+export function QRDownload({url,label}:{url:string;label?:string}){const [busy,setBusy]=useState(false);async function download(){setBusy(true);try{const QR=await import('qrcode');const data=await QR.toDataURL(url,{width:650,margin:3,color:{dark:'#252420',light:'#ffffff'},errorCorrectionLevel:'H'});const a=document.createElement('a');a.href=data;a.download=`linkspace-${label??'qr'}.png`;a.click();}catch{alert('Could not generate the QR code.');}finally{setBusy(false)}}return <button type="button" className="btn btn-small btn-light" onClick={download} disabled={busy}>{busy?<QrCode size={15}/>:<Download size={15}/>} Download QR</button>}

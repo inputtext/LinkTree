@@ -1,0 +1,3 @@
+import {SiteNav} from '@/components/site-nav';import {HandleClaim} from '@/components/handle-claim';import {requireUser} from '@/lib/auth';import {redirect} from 'next/navigation';
+export const dynamic='force-dynamic';
+export default async function Claim(){const {sb,user}=await requireUser();const {data}=await sb.from('profiles').select('handle').eq('user_id',user.id).maybeSingle();if(data?.handle)redirect('/onboarding/profile');return <><SiteNav/><main className="onboarding"><span className="eyebrow">Your space · Step 01 of 02</span><h1 className="serif">First, what should we call your little corner?</h1><p>Pick a unique handle. It becomes the address you can share with everyone.</p><HandleClaim/></main></>}

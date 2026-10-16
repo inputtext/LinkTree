@@ -1,0 +1,3 @@
+import {serverSupabase} from '@/lib/supabase';
+import {errorResponse} from '@/lib/http';
+export async function GET(){const sb=await serverSupabase();const {data:{user}}=await sb.auth.getUser();if(!user)return errorResponse('Sign in required',401);const {data,error}=await sb.from('profiles').select('handle,display_name,bio,avatar_url,theme,draft_blocks,revision').eq('user_id',user.id).single();if(error)return errorResponse('Export unavailable',500);return new Response(JSON.stringify({format:'linkspace-1',exported_at:new Date().toISOString(),profile:data},null,2),{headers:{'Content-Type':'application/json','Content-Disposition':'attachment; filename="linkspace-profile.json"','Cache-Control':'private, no-store'}})}

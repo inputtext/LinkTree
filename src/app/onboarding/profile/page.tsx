@@ -1,0 +1,3 @@
+import {SiteNav} from '@/components/site-nav';import {ProfileOnboard} from '@/components/profile-onboard';import {requireUser} from '@/lib/auth';import {redirect} from 'next/navigation';
+export const dynamic='force-dynamic';
+export default async function ProfileStep(){const {sb,user}=await requireUser();const {data}=await sb.from('profiles').select('*').eq('user_id',user.id).maybeSingle();if(!data?.handle)redirect('/onboarding/handle');return <><SiteNav/><main className="onboarding"><span className="eyebrow">Your space · Step 02 of 02</span><h1 className="serif">Tell us a bit about you.</h1><p>This is how you will appear to everyone who visits your space. You can always change it.</p><div style={{marginTop:32}}><ProfileOnboard profile={data}/></div></main></>}
